@@ -5,8 +5,8 @@
 #include <gsl/gsl_rng.h>
 #include <SDL2/SDL.h>
 
-#define TITLE			"game of life"
-#define WINDOW_X	0
+#define TITLE     "game of life"
+#define WINDOW_X  0
 #define WINDOW_Y  0
 #define WINDOW_W  800
 #define WINDOW_H  480
@@ -14,8 +14,8 @@
 void
 handle_error (const char *msg)
 {
-	perror (msg);
-	exit (EXIT_FAILURE);
+  perror (msg);
+  exit (EXIT_FAILURE);
 }
 
 int
@@ -39,8 +39,8 @@ int
 main (void)
 {
 
-	SDL_Renderer *renderer = NULL;
-	SDL_Window *window = NULL;
+  SDL_Renderer *renderer = NULL;
+  SDL_Window *window = NULL;
   unsigned int cell_width, cell_height;
   cell_width  = 10;
   cell_height = 10;
@@ -54,11 +54,11 @@ main (void)
 
   SDL_Rect cell = {0, 0, cell_width, cell_height};
   
-	if (SDL_Init (SDL_INIT_VIDEO) != 0)
-		{
-			SDL_Quit ();
-			handle_error ("SDL_Init");
-		}
+  if (SDL_Init (SDL_INIT_VIDEO) != 0)
+    {
+      SDL_Quit ();
+      handle_error ("SDL_Init");
+    }
 
   window = SDL_CreateWindow (TITLE,
                              WINDOW_X, WINDOW_Y,
@@ -66,10 +66,10 @@ main (void)
                              0);
                              //SDL_WINDOW_BORDERLESS);
                              //SDL_WINDOW_OPENGL);
-	if (window == NULL)
+  if (window == NULL)
     {
       SDL_DestroyWindow (window);
-		  handle_error ("SDL_CreateWindow");
+      handle_error ("SDL_CreateWindow");
     }
 
   renderer = SDL_CreateRenderer (window, -1, SDL_RENDERER_SOFTWARE);
