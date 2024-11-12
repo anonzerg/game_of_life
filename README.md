@@ -3,7 +3,7 @@
 simple one file implementation of Conway's game of life.
 
 ## how to build
-install `make`, `clang`, `libgsl-dev` and `libsdl2-dev`.
+install `make`, `clang`, `libgsl-dev` and `libsdl2-dev`. you can install by `apt` in ubuntu
 ```
 sudo apt install make clang libgsl-dev libsdl2-dev`
 ```
