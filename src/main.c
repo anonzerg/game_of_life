@@ -113,7 +113,7 @@ main (void)
       if (state_update (next_state, current_state) != 0)
         handle_error ("state_update");
       gsl_matrix_memcpy (current_state, next_state); 
-      SDL_Delay (500);
+      SDL_Delay (100);
       /*  loop end  */
     }
   SDL_RenderPresent (renderer);
@@ -214,19 +214,15 @@ state_update (gsl_matrix *next_state, gsl_matrix *current_state)
         current_cell = (int)gsl_matrix_get (current_state, i, j);
         if (current_cell == 1)
           {
-            if (live_neighbors < 2)
-              gsl_matrix_set (next_state, i, j, 0);
-            else if (live_neighbors == 2 || live_neighbors == 3)
+            if (live_neighbors == 2 || live_neighbors == 3)
               gsl_matrix_set (next_state, i, j, 1);
-            else if (live_neighbors > 3)
+            else if (live_neighbors < 2 || live_neighbors > 3)
               gsl_matrix_set (next_state, i, j, 0);
           }
         else if (current_cell == 0)
           {
             if (live_neighbors == 3)
               gsl_matrix_set (next_state, i, j, 1);
-            else
-              gsl_matrix_set (next_state, i, j, 0);
           }
         else
           return -1;
@@ -239,9 +235,9 @@ neighbor_count (gsl_matrix *mat, size_t i, size_t j)
 {
   int count = 0;
   int dir[8][2] = {
-        {-1, -1}, {0, -1}, {1, -1},
-        {-1,  0},          {1,  0},
-        {-1,  1}, {0, +1}, {1, -1}
+        {-1, -1}, {-1, 0}, {-1, +1},
+        { 0, -1},          { 0, +1},
+        {+1, -1}, {+1, 0}, {+1, +1},
   };
   size_t k, ni, nj;
   for (k = 0; k < 8; k++)
@@ -250,8 +246,8 @@ neighbor_count (gsl_matrix *mat, size_t i, size_t j)
       nj = j + dir[k][1];
       if (ni >= 0 && ni < mat -> size1 && nj >= 0 && nj < mat -> size2)
         {
-          if (gsl_matrix_get (mat, ni, nj) == 1)
-            ++count;
+          if ((int)gsl_matrix_get (mat, ni, nj) == 1)
+            count++;
         }
     }
   return count;
