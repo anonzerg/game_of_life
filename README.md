@@ -1,15 +1,5 @@
 # [game_of_life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
-```
- ██████╗  █████╗ ███╗   ███╗███████╗     ██████╗ ███████╗    ██╗     ██╗███████╗███████╗
-██╔════╝ ██╔══██╗████╗ ████║██╔════╝    ██╔═══██╗██╔════╝    ██║     ██║██╔════╝██╔════╝
-██║  ███╗███████║██╔████╔██║█████╗      ██║   ██║█████╗      ██║     ██║█████╗  █████╗  
-██║   ██║██╔══██║██║╚██╔╝██║██╔══╝      ██║   ██║██╔══╝      ██║     ██║██╔══╝  ██╔══╝  
-╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗    ╚██████╔╝██║         ███████╗██║██║     ███████╗
- ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝     ╚═════╝ ╚═╝         ╚══════╝╚═╝╚═╝     ╚══════╝
-
-```
-
-simple one file implementation of Conway's game of life.
+Conway's game of life implemented in C using [gsl](https://www.gnu.org/software/gsl/) and [sdl2](https://www.libsdl.org/).
 
 ## how to build
 install `make`, `clang`, `libgsl-dev` and `libsdl2-dev`
@@ -31,5 +21,5 @@ and run the program by
 ```
 
 > [!NOTE]
-> this is a simple try to understand game of life and not a complete program.
+> this is a simple try to use with SDL2 and GSL in a program and not a complete program.
 
