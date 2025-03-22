@@ -1,14 +1,20 @@
 CC := clang
-CFLAGS := -g -Oz -Wall -Wextra -Werror -Wpedantic
-LIBS := -lSDL2 -lgsl -lgslcblas -lm
-PROGRAM_NAME = game_of_life
+CFLAGS := -O2 -Wall -Wextra $(shell sdl2-config --cflags) $(shell sdl2-config --cflags)
+LIBS := $(shell sdl2-config --libs) $(shell gsl-config --libs)
+SRCS := $(wildcard src/*.c)
+OBJS := $(SRCS:.c=.o)
+TRAGET = game_of_life
 
-./bin/$(PROGRAM_NAME): ./src/main.c ./bin
-	$(CC) $(CFLAGS) -o $@ $< $(LIBS)
+./bin/$(TARGET): $(OBJS)
+	$(CC) $(OBJS) -o $(TARGET) $(LIBS)
+
+./bin/%.o: ./src/%.c ./bin
+	$(CC) $(CFLAGS) -c $< -o $@
 
 ./bin:
 	mkdir ./bin
 
 clean:
-	rm ./bin/$(PROGRAM_NAME)
+	rm -rf ./src/*.o
+	rm -rf ./bin/*
 
