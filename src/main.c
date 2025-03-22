@@ -5,11 +5,11 @@
 #include <gsl/gsl_rng.h>
 #include <SDL2/SDL.h>
 
-#define TITLE     "game of life"
-#define WINDOW_X  0
-#define WINDOW_Y  0
-#define WINDOW_W  800
-#define WINDOW_H  480
+#define TITLE "game of life"
+#define WINDOW_X 0
+#define WINDOW_Y 0
+#define WINDOW_W 800
+#define WINDOW_H 480
 
 void
 handle_error (const char *msg)
@@ -19,9 +19,7 @@ handle_error (const char *msg)
 }
 
 int
-draw_grid (SDL_Renderer *renderer,
-           unsigned int cell_width,
-           unsigned int cell_height);
+draw_grid (SDL_Renderer *renderer, unsigned int cell_width, unsigned int cell_height);
 
 int
 state_random_init (gsl_matrix *mat);
@@ -38,16 +36,13 @@ neighbor_count (gsl_matrix *current_state, size_t i, size_t j);
 int
 main (void)
 {
-
   SDL_Renderer *renderer = NULL;
   SDL_Window *window = NULL;
   unsigned int cell_width, cell_height;
   cell_width  = 10;
   cell_height = 10;
-  gsl_matrix *current_state = gsl_matrix_calloc (WINDOW_W / cell_width,
-                                        WINDOW_H / cell_height);
-  gsl_matrix *next_state = gsl_matrix_calloc (WINDOW_W / cell_width,
-                                        WINDOW_H / cell_height);
+  gsl_matrix *current_state = gsl_matrix_calloc (WINDOW_W / cell_width, WINDOW_H / cell_height);
+  gsl_matrix *next_state = gsl_matrix_calloc (WINDOW_W / cell_width, WINDOW_H / cell_height);
 
   if (state_random_init (current_state) != 0)
     handle_error ("state_random_init");
@@ -60,12 +55,8 @@ main (void)
       handle_error ("SDL_Init");
     }
 
-  window = SDL_CreateWindow (TITLE,
-                             WINDOW_X, WINDOW_Y,
-                             WINDOW_W, WINDOW_H,
-                             0);
-                             //SDL_WINDOW_BORDERLESS);
-                             //SDL_WINDOW_OPENGL);
+  window = SDL_CreateWindow (TITLE, WINDOW_X, WINDOW_Y, WINDOW_W, WINDOW_H, 0);
+  
   if (window == NULL)
     {
       SDL_DestroyWindow (window);
@@ -125,9 +116,7 @@ main (void)
 }
 
 int
-draw_grid (SDL_Renderer *renderer,
-           unsigned int cell_width,
-           unsigned int cell_height)
+draw_grid (SDL_Renderer *renderer, unsigned int cell_width, unsigned int cell_height)
 {
   if (SDL_SetRenderDrawColor (renderer, 0x80, 0x80, 0x80, 0xff) != 0)
     return -1;
