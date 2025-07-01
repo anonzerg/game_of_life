@@ -12,7 +12,8 @@ handle_error (const char *msg)
 }
 
 int
-draw_grid (SDL_Renderer *renderer, unsigned int cell_width, unsigned int cell_height)
+draw_grid (SDL_Renderer *renderer, unsigned int cell_width,
+           unsigned int cell_height)
 {
   if (SDL_SetRenderDrawColor (renderer, 0x80, 0x80, 0x80, 0xff) != 0)
     return -1;
@@ -36,14 +37,15 @@ draw_grid (SDL_Renderer *renderer, unsigned int cell_width, unsigned int cell_he
 }
 
 int
-state_render (SDL_Renderer *renderer, gsl_matrix *current_state, SDL_Rect *rect)
+state_render (SDL_Renderer *renderer, gsl_matrix *current_state,
+              SDL_Rect *rect)
 {
   unsigned int i, j;
-  for (i = 0; i < current_state -> size1; i++)
-    for (j = 0; j < current_state -> size2; j++)
+  for (i = 0; i < current_state->size1; i++)
+    for (j = 0; j < current_state->size2; j++)
       {
-        rect -> x = i * rect -> w;
-        rect -> y = j * rect -> h;
+        rect->x = i * rect->w;
+        rect->y = j * rect->h;
         if (gsl_matrix_get (current_state, i, j) == 0)
           {
             if (SDL_SetRenderDrawColor (renderer, 0xff, 0xff, 0xff, 0xff) != 0)
@@ -78,8 +80,8 @@ state_random_init (gsl_matrix *mat)
     return -1;
 
   size_t i, j;
-  for (i = 0; i < mat -> size1; i++)
-    for (j = 0; j < mat -> size2; j++)
+  for (i = 0; i < mat->size1; i++)
+    for (j = 0; j < mat->size2; j++)
       gsl_matrix_set (mat, i, j, gsl_rng_uniform_int (r, 2));
 
   gsl_rng_free (r);
@@ -92,8 +94,8 @@ state_update (gsl_matrix *next_state, gsl_matrix *current_state)
   int live_neighbors;
   int current_cell;
   size_t i, j;
-  for (i = 0; i < current_state -> size1; i++)
-    for (j = 0; j < current_state -> size2; j++)
+  for (i = 0; i < current_state->size1; i++)
+    for (j = 0; j < current_state->size2; j++)
       {
         live_neighbors = neighbor_count (current_state, i, j);
         current_cell = (int)gsl_matrix_get (current_state, i, j);
@@ -116,20 +118,19 @@ state_update (gsl_matrix *next_state, gsl_matrix *current_state)
 }
 
 int
-neighbor_count (gsl_matrix *mat, size_t i, size_t j)
+neighbor_count (gsl_matrix *mat, int i, int j)
 {
   int count = 0;
   int dir[8][2] = {
-        {-1, -1}, {-1, 0}, {-1, +1},
-        { 0, -1},          { 0, +1},
-        {+1, -1}, {+1, 0}, {+1, +1},
+    { -1, -1 }, { -1, 0 },  { -1, +1 }, { 0, -1 },
+    { 0, +1 },  { +1, -1 }, { +1, 0 },  { +1, +1 },
   };
   size_t k, ni, nj;
   for (k = 0; k < 8; k++)
     {
       ni = i + dir[k][0];
       nj = j + dir[k][1];
-      if (ni >= 0 && ni < mat -> size1 && nj >= 0 && nj < mat -> size2)
+      if (ni >= 0 && ni < mat->size1 && nj >= 0 && nj < mat->size2)
         {
           if ((int)gsl_matrix_get (mat, ni, nj) == 1)
             count++;
@@ -137,4 +138,3 @@ neighbor_count (gsl_matrix *mat, size_t i, size_t j)
     }
   return count;
 }
-

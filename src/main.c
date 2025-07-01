@@ -6,16 +6,18 @@ main (void)
   SDL_Renderer *renderer = NULL;
   SDL_Window *window = NULL;
   unsigned int cell_width, cell_height;
-  cell_width  = 10;
+  cell_width = 10;
   cell_height = 10;
-  gsl_matrix *current_state = gsl_matrix_calloc (WINDOW_W / cell_width, WINDOW_H / cell_height);
-  gsl_matrix *next_state = gsl_matrix_calloc (WINDOW_W / cell_width, WINDOW_H / cell_height);
+  gsl_matrix *current_state
+      = gsl_matrix_calloc (WINDOW_W / cell_width, WINDOW_H / cell_height);
+  gsl_matrix *next_state
+      = gsl_matrix_calloc (WINDOW_W / cell_width, WINDOW_H / cell_height);
 
   if (state_random_init (current_state) != 0)
     handle_error ("state_random_init");
 
-  SDL_Rect cell = {0, 0, cell_width, cell_height};
-  
+  SDL_Rect cell = { 0, 0, cell_width, cell_height };
+
   if (SDL_Init (SDL_INIT_VIDEO) != 0)
     {
       SDL_Quit ();
@@ -23,7 +25,7 @@ main (void)
     }
 
   window = SDL_CreateWindow (TITLE, WINDOW_X, WINDOW_Y, WINDOW_W, WINDOW_H, 0);
-  
+
   if (window == NULL)
     {
       SDL_DestroyWindow (window);
@@ -70,7 +72,7 @@ main (void)
       SDL_RenderPresent (renderer);
       if (state_update (next_state, current_state) != 0)
         handle_error ("state_update");
-      gsl_matrix_memcpy (current_state, next_state); 
+      gsl_matrix_memcpy (current_state, next_state);
       SDL_Delay (100);
       /*  loop end  */
     }
@@ -78,7 +80,6 @@ main (void)
 
   SDL_DestroyRenderer (renderer);
   SDL_DestroyWindow (window);
-	SDL_Quit ();
-	exit (EXIT_SUCCESS);
+  SDL_Quit ();
+  exit (EXIT_SUCCESS);
 }
-
